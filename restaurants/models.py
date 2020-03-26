@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.timezone import now
+from accounts.models import Profile
 
 # Create your models here.
 
@@ -7,20 +8,20 @@ from django.utils.timezone import now
 class Restaurant(models.Model):
     name = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
-    menu_list = models.ForeignKey('MenuList', on_delete=models.CASCADE,
+    menu_list = models.ForeignKey('MenuList', on_delete=models.DO_NOTHING,
                                   null=True, blank=True)
 
 
 class MenuList(models.Model):
     name = models.CharField(max_length=255)
-    menu = models.ManyToManyField(
-        'Menu')
 
 
 class Menu(models.Model):
     name = models.CharField(max_length=255)
     price = models.DecimalField(max_digits=20, decimal_places=2)
     units = models.IntegerField(default=1)
+    menu_list = models.ForeignKey('MenuList', on_delete=models.DO_NOTHING,
+                                  null=True, blank=True)
 
 
 class Order(models.Model):
@@ -36,6 +37,7 @@ class Order(models.Model):
         ('transit', 'transit'),
         ('completed', 'completed')
     )
+    profile = models.ForeignKey(Profile, on_delete=models.DO_NOTHING)
     payment_method = models.CharField(max_length=30, choices=payment_method)
     restaurant = models.ForeignKey('Restaurant', on_delete=models.CASCADE)
     menu = models.ForeignKey('Menu', on_delete=models.CASCADE)
