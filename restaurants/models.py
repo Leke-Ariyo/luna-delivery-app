@@ -11,9 +11,15 @@ class Restaurant(models.Model):
     menu_list = models.ForeignKey('MenuList', on_delete=models.DO_NOTHING,
                                   null=True, blank=True)
 
+    def __str__(self):
+        return f'{self.name}'
+
 
 class MenuList(models.Model):
     name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return f'{self.name} {self.menu}'
 
 
 class Menu(models.Model):
@@ -22,6 +28,9 @@ class Menu(models.Model):
     units = models.IntegerField(default=1)
     menu_list = models.ForeignKey('MenuList', on_delete=models.DO_NOTHING,
                                   null=True, blank=True)
+
+    def __str__(self):
+        return f'{self.name}'
 
 
 class Order(models.Model):
@@ -47,8 +56,17 @@ class Order(models.Model):
     delivery_company = models.ForeignKey(
         'DeliveryCompany', on_delete=models.CASCADE)
 
+    def __str__(self):
+        return f'{self.restaurant} {self.menu} {self.status}'
+
 
 class DeliveryCompany(models.Model):
     name = models.CharField(max_length=255)
     staff_id = models.PositiveIntegerField(blank=True, null=True)
     staff_name = models.CharField(max_length=255, blank=True, null=True)
+
+    class Meta:
+        verbose_name_plural = "DeliveryCompanies"
+
+    def __str__(self):
+        return f'{self.name} {self.staff_name}'
