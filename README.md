@@ -6,6 +6,9 @@ It functionalities include:
 1. Restaurants signing up
 2. Restaurants creating menus
 3. Restaurants adding and removing meals from their menu
+4. Customers being able to create orders which will show up on the restaurants' dashboard
+5. Delivery companies signing up on the website
+
 
 ##  Setting up
 - Install requirements
